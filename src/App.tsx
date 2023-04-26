@@ -1,43 +1,19 @@
-import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import { AuthService, useAuth } from "./openid";
+import UserService from "./keycloak";
 
 function App() {
-	const { user, token, loading, error, setUser } = useAuth();
-	const auth = new AuthService();
-
-	useEffect(() => {
-		auth
-			.sso()
-			.then((value) => {
-				console.log(value);
-				setUser(value);
-			})
-			.catch((error) => {
-				console.log(error);
-				//auth.removeUser();
-			});
-	});
-
-	return (
-		<div>
-			{loading ? (
-				<p>Loading</p>
-			) : user ? (
-				<>
-					<p>Token: {token}</p>
-					<p>Error: {error ? error : "No error"}</p>
-					<button onClick={() => auth.logout()}>Logout</button>
-				</>
-			) : (
-				<>
-					<button onClick={() => auth.login()}>Login</button>
-				</>
-			)}
-		</div>
-	);
+  return (
+    <div className="App">
+      {UserService.isLoggedIn() ? (
+        <>
+          <h1>Hello {UserService.getUsername()}</h1>
+          <button onClick={() => UserService.doLogout()}>Logout</button>
+        </>
+      ) : (
+        <button onClick={() => UserService.doLogin()}>Login</button>
+      )}
+    </div>
+  );
 }
 
 export default App;

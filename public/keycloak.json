@@ -1,0 +1,8 @@
+{
+  "realm": "sonar_staging",
+  "auth-server-url": "https://idp.sonarmentalhealth.com/",
+  "ssl-required": "external",
+  "resource": "sonar_client",
+  "public-client": true,
+  "confidential-port": 0
+}
